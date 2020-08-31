@@ -1430,7 +1430,7 @@ type User {
   likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   rooms(where: RoomWhereInput, orderBy: RoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Room!]
-  loginSecret: String!
+  loginSecret: String
 }
 
 type UserConnection {
@@ -1452,7 +1452,7 @@ input UserCreateInput {
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
-  loginSecret: String!
+  loginSecret: String
 }
 
 input UserCreateManyWithoutFollowersInput {
@@ -1502,7 +1502,7 @@ input UserCreateWithoutCommentsInput {
   posts: PostCreateManyWithoutUserInput
   likes: LikeCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
-  loginSecret: String!
+  loginSecret: String
 }
 
 input UserCreateWithoutFollowersInput {
@@ -1517,7 +1517,7 @@ input UserCreateWithoutFollowersInput {
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
-  loginSecret: String!
+  loginSecret: String
 }
 
 input UserCreateWithoutFollowingInput {
@@ -1532,7 +1532,7 @@ input UserCreateWithoutFollowingInput {
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
-  loginSecret: String!
+  loginSecret: String
 }
 
 input UserCreateWithoutLikesInput {
@@ -1547,7 +1547,7 @@ input UserCreateWithoutLikesInput {
   posts: PostCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
-  loginSecret: String!
+  loginSecret: String
 }
 
 input UserCreateWithoutPostsInput {
@@ -1562,7 +1562,7 @@ input UserCreateWithoutPostsInput {
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
-  loginSecret: String!
+  loginSecret: String
 }
 
 input UserCreateWithoutRoomsInput {
@@ -1577,7 +1577,7 @@ input UserCreateWithoutRoomsInput {
   posts: PostCreateManyWithoutUserInput
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
-  loginSecret: String!
+  loginSecret: String
 }
 
 type UserEdge {
@@ -1609,7 +1609,7 @@ type UserPreviousValues {
   firstName: String
   lastName: String
   bio: String
-  loginSecret: String!
+  loginSecret: String
 }
 
 input UserScalarWhereInput {
