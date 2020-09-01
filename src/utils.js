@@ -23,7 +23,7 @@ export const sendSecretMail = (adress, secret) => {
     const email = {
         from: "instagramclon@instaclon.com",
         to: adress,
-        subject: "🔒Login Secret for Prismagram🔒",
+        subject: "🔒Login Secret for Instagram-clone🔒",
         html: `Hello! Your login secret is <strong>${secret}</strong>.<br/>Copy paste on the app/website to log in`
     };
     return sendMail(email);

@@ -6,6 +6,7 @@ export default {
         requestSecret: async (_, args, { request }) => {
             const { email } = args;
             const loginSecret = generateSecret();
+            console.log(request)
             try {
                 // throw Error();
                 // await sendSecretMail(email, loginSecret);
