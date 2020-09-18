@@ -12,6 +12,8 @@ type User {
   comments: [Comment!]!
   rooms: [Room!]!
   loginSecret: String
+  createdAt: String
+  updatedAt: String
 }
 
 type Post {
@@ -47,6 +49,8 @@ type Room {
   id: ID!
   participants: [User!]!
   messages: [Message!]!
+  createdAt: String
+  updatedAt: String
 }
 
 type Message {
