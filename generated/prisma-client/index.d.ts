@@ -330,6 +330,8 @@ export interface ClientConstructor<T> {
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "avatar_ASC"
+  | "avatar_DESC"
   | "username_ASC"
   | "username_DESC"
   | "email_ASC"
@@ -390,6 +392,20 @@ export interface UserWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  avatar?: Maybe<String>;
+  avatar_not?: Maybe<String>;
+  avatar_in?: Maybe<String[] | String>;
+  avatar_not_in?: Maybe<String[] | String>;
+  avatar_lt?: Maybe<String>;
+  avatar_lte?: Maybe<String>;
+  avatar_gt?: Maybe<String>;
+  avatar_gte?: Maybe<String>;
+  avatar_contains?: Maybe<String>;
+  avatar_not_contains?: Maybe<String>;
+  avatar_starts_with?: Maybe<String>;
+  avatar_not_starts_with?: Maybe<String>;
+  avatar_ends_with?: Maybe<String>;
+  avatar_not_ends_with?: Maybe<String>;
   username?: Maybe<String>;
   username_not?: Maybe<String>;
   username_in?: Maybe<String[] | String>;
@@ -740,8 +756,8 @@ export type UserWhereUniqueInput = AtLeastOne<{
 export interface CommentCreateInput {
   id?: Maybe<ID_Input>;
   text: String;
-  user: UserCreateOneWithoutCommentsInput;
-  post: PostCreateOneWithoutCommentsInput;
+  user?: Maybe<UserCreateOneWithoutCommentsInput>;
+  post?: Maybe<PostCreateOneWithoutCommentsInput>;
 }
 
 export interface UserCreateOneWithoutCommentsInput {
@@ -751,6 +767,7 @@ export interface UserCreateOneWithoutCommentsInput {
 
 export interface UserCreateWithoutCommentsInput {
   id?: Maybe<ID_Input>;
+  avatar?: Maybe<String>;
   username: String;
   email: String;
   firstName?: Maybe<String>;
@@ -773,6 +790,7 @@ export interface UserCreateManyWithoutFollowersInput {
 
 export interface UserCreateWithoutFollowersInput {
   id?: Maybe<ID_Input>;
+  avatar?: Maybe<String>;
   username: String;
   email: String;
   firstName?: Maybe<String>;
@@ -817,7 +835,7 @@ export interface LikeCreateManyWithoutPostInput {
 
 export interface LikeCreateWithoutPostInput {
   id?: Maybe<ID_Input>;
-  user: UserCreateOneWithoutLikesInput;
+  user?: Maybe<UserCreateOneWithoutLikesInput>;
 }
 
 export interface UserCreateOneWithoutLikesInput {
@@ -827,6 +845,7 @@ export interface UserCreateOneWithoutLikesInput {
 
 export interface UserCreateWithoutLikesInput {
   id?: Maybe<ID_Input>;
+  avatar?: Maybe<String>;
   username: String;
   email: String;
   firstName?: Maybe<String>;
@@ -849,6 +868,7 @@ export interface UserCreateManyWithoutFollowingInput {
 
 export interface UserCreateWithoutFollowingInput {
   id?: Maybe<ID_Input>;
+  avatar?: Maybe<String>;
   username: String;
   email: String;
   firstName?: Maybe<String>;
@@ -869,7 +889,7 @@ export interface LikeCreateManyWithoutUserInput {
 
 export interface LikeCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
-  post: PostCreateOneWithoutLikesInput;
+  post?: Maybe<PostCreateOneWithoutLikesInput>;
 }
 
 export interface PostCreateOneWithoutLikesInput {
@@ -881,7 +901,7 @@ export interface PostCreateWithoutLikesInput {
   id?: Maybe<ID_Input>;
   location?: Maybe<String>;
   caption: String;
-  user: UserCreateOneWithoutPostsInput;
+  user?: Maybe<UserCreateOneWithoutPostsInput>;
   files?: Maybe<FileCreateManyWithoutPostInput>;
   comments?: Maybe<CommentCreateManyWithoutPostInput>;
 }
@@ -893,6 +913,7 @@ export interface UserCreateOneWithoutPostsInput {
 
 export interface UserCreateWithoutPostsInput {
   id?: Maybe<ID_Input>;
+  avatar?: Maybe<String>;
   username: String;
   email: String;
   firstName?: Maybe<String>;
@@ -916,7 +937,7 @@ export interface CommentCreateManyWithoutUserInput {
 export interface CommentCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
   text: String;
-  post: PostCreateOneWithoutCommentsInput;
+  post?: Maybe<PostCreateOneWithoutCommentsInput>;
 }
 
 export interface PostCreateOneWithoutCommentsInput {
@@ -928,7 +949,7 @@ export interface PostCreateWithoutCommentsInput {
   id?: Maybe<ID_Input>;
   location?: Maybe<String>;
   caption: String;
-  user: UserCreateOneWithoutPostsInput;
+  user?: Maybe<UserCreateOneWithoutPostsInput>;
   files?: Maybe<FileCreateManyWithoutPostInput>;
   likes?: Maybe<LikeCreateManyWithoutPostInput>;
 }
@@ -966,6 +987,7 @@ export interface UserCreateOneInput {
 
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
+  avatar?: Maybe<String>;
   username: String;
   email: String;
   firstName?: Maybe<String>;
@@ -990,23 +1012,26 @@ export interface CommentCreateManyWithoutPostInput {
 export interface CommentCreateWithoutPostInput {
   id?: Maybe<ID_Input>;
   text: String;
-  user: UserCreateOneWithoutCommentsInput;
+  user?: Maybe<UserCreateOneWithoutCommentsInput>;
 }
 
 export interface CommentUpdateInput {
   text?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutCommentsInput>;
-  post?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
+  user?: Maybe<UserUpdateOneWithoutCommentsInput>;
+  post?: Maybe<PostUpdateOneWithoutCommentsInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutCommentsInput {
+export interface UserUpdateOneWithoutCommentsInput {
   create?: Maybe<UserCreateWithoutCommentsInput>;
   update?: Maybe<UserUpdateWithoutCommentsDataInput>;
   upsert?: Maybe<UserUpsertWithoutCommentsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserUpdateWithoutCommentsDataInput {
+  avatar?: Maybe<String>;
   username?: Maybe<String>;
   email?: Maybe<String>;
   firstName?: Maybe<String>;
@@ -1048,6 +1073,7 @@ export interface UserUpdateWithWhereUniqueWithoutFollowersInput {
 }
 
 export interface UserUpdateWithoutFollowersDataInput {
+  avatar?: Maybe<String>;
   username?: Maybe<String>;
   email?: Maybe<String>;
   firstName?: Maybe<String>;
@@ -1195,17 +1221,20 @@ export interface LikeUpdateWithWhereUniqueWithoutPostInput {
 }
 
 export interface LikeUpdateWithoutPostDataInput {
-  user?: Maybe<UserUpdateOneRequiredWithoutLikesInput>;
+  user?: Maybe<UserUpdateOneWithoutLikesInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutLikesInput {
+export interface UserUpdateOneWithoutLikesInput {
   create?: Maybe<UserCreateWithoutLikesInput>;
   update?: Maybe<UserUpdateWithoutLikesDataInput>;
   upsert?: Maybe<UserUpsertWithoutLikesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserUpdateWithoutLikesDataInput {
+  avatar?: Maybe<String>;
   username?: Maybe<String>;
   email?: Maybe<String>;
   firstName?: Maybe<String>;
@@ -1247,6 +1276,7 @@ export interface UserUpdateWithWhereUniqueWithoutFollowingInput {
 }
 
 export interface UserUpdateWithoutFollowingDataInput {
+  avatar?: Maybe<String>;
   username?: Maybe<String>;
   email?: Maybe<String>;
   firstName?: Maybe<String>;
@@ -1283,32 +1313,37 @@ export interface LikeUpdateWithWhereUniqueWithoutUserInput {
 }
 
 export interface LikeUpdateWithoutUserDataInput {
-  post?: Maybe<PostUpdateOneRequiredWithoutLikesInput>;
+  post?: Maybe<PostUpdateOneWithoutLikesInput>;
 }
 
-export interface PostUpdateOneRequiredWithoutLikesInput {
+export interface PostUpdateOneWithoutLikesInput {
   create?: Maybe<PostCreateWithoutLikesInput>;
   update?: Maybe<PostUpdateWithoutLikesDataInput>;
   upsert?: Maybe<PostUpsertWithoutLikesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<PostWhereUniqueInput>;
 }
 
 export interface PostUpdateWithoutLikesDataInput {
   location?: Maybe<String>;
   caption?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
+  user?: Maybe<UserUpdateOneWithoutPostsInput>;
   files?: Maybe<FileUpdateManyWithoutPostInput>;
   comments?: Maybe<CommentUpdateManyWithoutPostInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutPostsInput {
+export interface UserUpdateOneWithoutPostsInput {
   create?: Maybe<UserCreateWithoutPostsInput>;
   update?: Maybe<UserUpdateWithoutPostsDataInput>;
   upsert?: Maybe<UserUpsertWithoutPostsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserUpdateWithoutPostsDataInput {
+  avatar?: Maybe<String>;
   username?: Maybe<String>;
   email?: Maybe<String>;
   firstName?: Maybe<String>;
@@ -1352,20 +1387,22 @@ export interface CommentUpdateWithWhereUniqueWithoutUserInput {
 
 export interface CommentUpdateWithoutUserDataInput {
   text?: Maybe<String>;
-  post?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
+  post?: Maybe<PostUpdateOneWithoutCommentsInput>;
 }
 
-export interface PostUpdateOneRequiredWithoutCommentsInput {
+export interface PostUpdateOneWithoutCommentsInput {
   create?: Maybe<PostCreateWithoutCommentsInput>;
   update?: Maybe<PostUpdateWithoutCommentsDataInput>;
   upsert?: Maybe<PostUpsertWithoutCommentsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<PostWhereUniqueInput>;
 }
 
 export interface PostUpdateWithoutCommentsDataInput {
   location?: Maybe<String>;
   caption?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
+  user?: Maybe<UserUpdateOneWithoutPostsInput>;
   files?: Maybe<FileUpdateManyWithoutPostInput>;
   likes?: Maybe<LikeUpdateManyWithoutPostInput>;
 }
@@ -1494,6 +1531,7 @@ export interface UserUpdateOneRequiredInput {
 }
 
 export interface UserUpdateDataInput {
+  avatar?: Maybe<String>;
   username?: Maybe<String>;
   email?: Maybe<String>;
   firstName?: Maybe<String>;
@@ -1623,7 +1661,7 @@ export interface CommentUpdateWithWhereUniqueWithoutPostInput {
 
 export interface CommentUpdateWithoutPostDataInput {
   text?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutCommentsInput>;
+  user?: Maybe<UserUpdateOneWithoutCommentsInput>;
 }
 
 export interface CommentUpsertWithWhereUniqueWithoutPostInput {
@@ -1684,6 +1722,20 @@ export interface UserScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  avatar?: Maybe<String>;
+  avatar_not?: Maybe<String>;
+  avatar_in?: Maybe<String[] | String>;
+  avatar_not_in?: Maybe<String[] | String>;
+  avatar_lt?: Maybe<String>;
+  avatar_lte?: Maybe<String>;
+  avatar_gt?: Maybe<String>;
+  avatar_gte?: Maybe<String>;
+  avatar_contains?: Maybe<String>;
+  avatar_not_contains?: Maybe<String>;
+  avatar_starts_with?: Maybe<String>;
+  avatar_not_starts_with?: Maybe<String>;
+  avatar_ends_with?: Maybe<String>;
+  avatar_not_ends_with?: Maybe<String>;
   username?: Maybe<String>;
   username_not?: Maybe<String>;
   username_in?: Maybe<String[] | String>;
@@ -1779,6 +1831,7 @@ export interface UserUpdateManyWithWhereNestedInput {
 }
 
 export interface UserUpdateManyDataInput {
+  avatar?: Maybe<String>;
   username?: Maybe<String>;
   email?: Maybe<String>;
   firstName?: Maybe<String>;
@@ -1880,7 +1933,7 @@ export interface CommentUpdateManyMutationInput {
 export interface FileCreateInput {
   id?: Maybe<ID_Input>;
   url: String;
-  post: PostCreateOneWithoutFilesInput;
+  post?: Maybe<PostCreateOneWithoutFilesInput>;
 }
 
 export interface PostCreateOneWithoutFilesInput {
@@ -1892,27 +1945,29 @@ export interface PostCreateWithoutFilesInput {
   id?: Maybe<ID_Input>;
   location?: Maybe<String>;
   caption: String;
-  user: UserCreateOneWithoutPostsInput;
+  user?: Maybe<UserCreateOneWithoutPostsInput>;
   likes?: Maybe<LikeCreateManyWithoutPostInput>;
   comments?: Maybe<CommentCreateManyWithoutPostInput>;
 }
 
 export interface FileUpdateInput {
   url?: Maybe<String>;
-  post?: Maybe<PostUpdateOneRequiredWithoutFilesInput>;
+  post?: Maybe<PostUpdateOneWithoutFilesInput>;
 }
 
-export interface PostUpdateOneRequiredWithoutFilesInput {
+export interface PostUpdateOneWithoutFilesInput {
   create?: Maybe<PostCreateWithoutFilesInput>;
   update?: Maybe<PostUpdateWithoutFilesDataInput>;
   upsert?: Maybe<PostUpsertWithoutFilesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<PostWhereUniqueInput>;
 }
 
 export interface PostUpdateWithoutFilesDataInput {
   location?: Maybe<String>;
   caption?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
+  user?: Maybe<UserUpdateOneWithoutPostsInput>;
   likes?: Maybe<LikeUpdateManyWithoutPostInput>;
   comments?: Maybe<CommentUpdateManyWithoutPostInput>;
 }
@@ -1928,13 +1983,13 @@ export interface FileUpdateManyMutationInput {
 
 export interface LikeCreateInput {
   id?: Maybe<ID_Input>;
-  user: UserCreateOneWithoutLikesInput;
-  post: PostCreateOneWithoutLikesInput;
+  user?: Maybe<UserCreateOneWithoutLikesInput>;
+  post?: Maybe<PostCreateOneWithoutLikesInput>;
 }
 
 export interface LikeUpdateInput {
-  user?: Maybe<UserUpdateOneRequiredWithoutLikesInput>;
-  post?: Maybe<PostUpdateOneRequiredWithoutLikesInput>;
+  user?: Maybe<UserUpdateOneWithoutLikesInput>;
+  post?: Maybe<PostUpdateOneWithoutLikesInput>;
 }
 
 export interface MessageCreateInput {
@@ -1962,6 +2017,7 @@ export interface UserCreateManyWithoutRoomsInput {
 
 export interface UserCreateWithoutRoomsInput {
   id?: Maybe<ID_Input>;
+  avatar?: Maybe<String>;
   username: String;
   email: String;
   firstName?: Maybe<String>;
@@ -2019,6 +2075,7 @@ export interface UserUpdateWithWhereUniqueWithoutRoomsInput {
 }
 
 export interface UserUpdateWithoutRoomsDataInput {
+  avatar?: Maybe<String>;
   username?: Maybe<String>;
   email?: Maybe<String>;
   firstName?: Maybe<String>;
@@ -2051,7 +2108,7 @@ export interface PostCreateInput {
   id?: Maybe<ID_Input>;
   location?: Maybe<String>;
   caption: String;
-  user: UserCreateOneWithoutPostsInput;
+  user?: Maybe<UserCreateOneWithoutPostsInput>;
   files?: Maybe<FileCreateManyWithoutPostInput>;
   likes?: Maybe<LikeCreateManyWithoutPostInput>;
   comments?: Maybe<CommentCreateManyWithoutPostInput>;
@@ -2060,7 +2117,7 @@ export interface PostCreateInput {
 export interface PostUpdateInput {
   location?: Maybe<String>;
   caption?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
+  user?: Maybe<UserUpdateOneWithoutPostsInput>;
   files?: Maybe<FileUpdateManyWithoutPostInput>;
   likes?: Maybe<LikeUpdateManyWithoutPostInput>;
   comments?: Maybe<CommentUpdateManyWithoutPostInput>;
@@ -2083,6 +2140,7 @@ export interface RoomUpdateInput {
 }
 
 export interface UserUpdateInput {
+  avatar?: Maybe<String>;
   username?: Maybe<String>;
   email?: Maybe<String>;
   firstName?: Maybe<String>;
@@ -2098,6 +2156,7 @@ export interface UserUpdateInput {
 }
 
 export interface UserUpdateManyMutationInput {
+  avatar?: Maybe<String>;
   username?: Maybe<String>;
   email?: Maybe<String>;
   firstName?: Maybe<String>;
@@ -2219,6 +2278,7 @@ export interface CommentNullablePromise
 
 export interface User {
   id: ID_Output;
+  avatar?: String;
   username: String;
   email: String;
   firstName?: String;
@@ -2229,6 +2289,7 @@ export interface User {
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
+  avatar: () => Promise<String>;
   username: () => Promise<String>;
   email: () => Promise<String>;
   firstName: () => Promise<String>;
@@ -2295,6 +2356,7 @@ export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  avatar: () => Promise<AsyncIterator<String>>;
   username: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   firstName: () => Promise<AsyncIterator<String>>;
@@ -2361,6 +2423,7 @@ export interface UserNullablePromise
   extends Promise<User | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  avatar: () => Promise<String>;
   username: () => Promise<String>;
   email: () => Promise<String>;
   firstName: () => Promise<String>;
@@ -3400,6 +3463,7 @@ export interface UserSubscriptionPayloadSubscription
 
 export interface UserPreviousValues {
   id: ID_Output;
+  avatar?: String;
   username: String;
   email: String;
   firstName?: String;
@@ -3412,6 +3476,7 @@ export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  avatar: () => Promise<String>;
   username: () => Promise<String>;
   email: () => Promise<String>;
   firstName: () => Promise<String>;
@@ -3424,6 +3489,7 @@ export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  avatar: () => Promise<AsyncIterator<String>>;
   username: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   firstName: () => Promise<AsyncIterator<String>>;
